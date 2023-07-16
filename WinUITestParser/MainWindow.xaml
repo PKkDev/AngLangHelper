@@ -9,28 +9,15 @@
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Padding="5" ColumnSpacing="5">
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="140"></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
-            <ColumnDefinition Width="140"></ColumnDefinition>
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
 
-        <StackPanel Grid.Column="0" Orientation="Vertical" VerticalAlignment="Top" Spacing="5">
-        </StackPanel>
-
-        <Grid Grid.Column="1">
-
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition></ColumnDefinition>
-            </Grid.ColumnDefinitions>
-
-            <Grid.RowDefinitions>
-                <RowDefinition></RowDefinition>
-            </Grid.RowDefinitions>
+        <Grid Grid.Column="0">
 
             <Grid.Resources>
                 <CommandBarFlyout x:Name="OrDocumentCommandsFlyout">
@@ -87,14 +74,28 @@
 
             <StackPanel x:Name="OrSubPanel" VerticalAlignment="Bottom" Height="30" Padding="5" BorderBrush="DimGray" BorderThickness="1" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-                <StackPanel Height="18" Padding="5 0" Orientation="Horizontal" HorizontalAlignment="Right" Spacing="5">
-                    <Button Padding="10 5" Click="OrSubPanelClose_Click">
+                <Grid Height="18" Padding="5 0">
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0" HorizontalAlignment="Left" Orientation="Horizontal" Spacing="5" >
+                        <Image VerticalAlignment="Center" Height="15" Width="15" Source="Assets/StatusIcon/error.png"/>
+                        <TextBlock Text="{x:Bind OriginValidation.CountError, Mode=OneWay}"/>
+                        <Image VerticalAlignment="Center" Height="15" Width="15" Source="Assets/StatusIcon/warning.png"/>
+                        <TextBlock Text="{x:Bind OriginValidation.CountWarning, Mode=OneWay}"/>
+                    </StackPanel>
+
+                    <Button  Grid.Column="1" HorizontalAlignment="Right"  Padding="10 5" Click="OrSubPanelClose_Click">
                         <FontIcon x:Name="OrSubPanelCloseIcon" FontSize="10" Glyph="&#xE971;" />
                     </Button>
-                </StackPanel>
+
+                </Grid>
 
                 <ScrollViewer Height="118">
-                    <ListView ItemsSource="{x:Bind OriginValidationErrors, Mode=TwoWay}" SelectionMode="None" IsItemClickEnabled="True" ItemClick="ViewOrErrorItem_Click" >
+                    <ListView ItemsSource="{x:Bind OriginValidation.Errors, Mode=TwoWay}" SelectionMode="None" IsItemClickEnabled="True" ItemClick="ViewOrErrorItem_Click" >
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <Grid ColumnSpacing="5">
@@ -115,15 +116,7 @@
 
         </Grid>
 
-        <Grid Grid.Column="2">
-
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition></ColumnDefinition>
-            </Grid.ColumnDefinitions>
-
-            <Grid.RowDefinitions>
-                <RowDefinition></RowDefinition>
-            </Grid.RowDefinitions>
+        <Grid Grid.Column="1">
 
             <Grid.Resources>
                 <CommandBarFlyout x:Name="TrDocumentCommandsFlyout">
@@ -175,14 +168,28 @@
 
             <StackPanel x:Name="TrSubPanel" VerticalAlignment="Bottom" Height="30" Padding="5" BorderBrush="DimGray" BorderThickness="1" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-                <StackPanel Height="18" Padding="5 0" Orientation="Horizontal" HorizontalAlignment="Right">
-                    <Button Padding="10 5" Click="TrSubPanelClose_Click">
+                <Grid Height="18" Padding="5 0">
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0" HorizontalAlignment="Left" Orientation="Horizontal" Spacing="5" >
+                        <Image VerticalAlignment="Center" Height="15" Width="15" Source="Assets/StatusIcon/error.png"/>
+                        <TextBlock Text="{x:Bind TranslateValidation.CountError, Mode=OneWay}"/>
+                        <Image VerticalAlignment="Center" Height="15" Width="15" Source="Assets/StatusIcon/warning.png"/>
+                        <TextBlock Text="{x:Bind TranslateValidation.CountWarning, Mode=OneWay}"/>
+                    </StackPanel>
+
+                    <Button  Grid.Column="1" HorizontalAlignment="Right"  Padding="10 5" Click="TrSubPanelClose_Click">
                         <FontIcon x:Name="TrSubPanelCloseIcon" FontSize="10" Glyph="&#xE971;" />
                     </Button>
-                </StackPanel>
+
+                </Grid>
 
                 <ScrollViewer Height="118">
-                    <ListView ItemsSource="{x:Bind TranslateValidationErrors, Mode=TwoWay}" SelectionMode="None" IsItemClickEnabled="True" ItemClick="ViewTrErrorItem_Click" >
+                    <ListView ItemsSource="{x:Bind TranslateValidation.Errors, Mode=TwoWay}" SelectionMode="None" IsItemClickEnabled="True" ItemClick="ViewTrErrorItem_Click" >
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <Grid ColumnSpacing="5">
@@ -201,9 +208,6 @@
             </StackPanel>
 
         </Grid>
-
-        <StackPanel Grid.Column="3" Orientation="Vertical" VerticalAlignment="Top" Spacing="5">
-        </StackPanel>
 
     </Grid>
 

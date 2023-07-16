@@ -3,9 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.6.33801.468
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Parser.ConsoleApp", "Parser.ConsoleApp\Parser.ConsoleApp.csproj", "{B1000D51-EDA0-495C-AD3C-AF758639B55D}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinUITestParser", "WinUITestParser\WinUITestParser.csproj", "{9E90FAEA-D87F-428E-8C97-BC12FF53DF94}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WinUITestParser", "WinUITestParser\WinUITestParser.csproj", "{9E90FAEA-D87F-428E-8C97-BC12FF53DF94}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,22 +17,6 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{B1000D51-EDA0-495C-AD3C-AF758639B55D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B1000D51-EDA0-495C-AD3C-AF758639B55D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B1000D51-EDA0-495C-AD3C-AF758639B55D}.Debug|ARM64.ActiveCfg = Debug|Any CPU
-		{B1000D51-EDA0-495C-AD3C-AF758639B55D}.Debug|ARM64.Build.0 = Debug|Any CPU
-		{B1000D51-EDA0-495C-AD3C-AF758639B55D}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{B1000D51-EDA0-495C-AD3C-AF758639B55D}.Debug|x64.Build.0 = Debug|Any CPU
-		{B1000D51-EDA0-495C-AD3C-AF758639B55D}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{B1000D51-EDA0-495C-AD3C-AF758639B55D}.Debug|x86.Build.0 = Debug|Any CPU
-		{B1000D51-EDA0-495C-AD3C-AF758639B55D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B1000D51-EDA0-495C-AD3C-AF758639B55D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B1000D51-EDA0-495C-AD3C-AF758639B55D}.Release|ARM64.ActiveCfg = Release|Any CPU
-		{B1000D51-EDA0-495C-AD3C-AF758639B55D}.Release|ARM64.Build.0 = Release|Any CPU
-		{B1000D51-EDA0-495C-AD3C-AF758639B55D}.Release|x64.ActiveCfg = Release|Any CPU
-		{B1000D51-EDA0-495C-AD3C-AF758639B55D}.Release|x64.Build.0 = Release|Any CPU
-		{B1000D51-EDA0-495C-AD3C-AF758639B55D}.Release|x86.ActiveCfg = Release|Any CPU
-		{B1000D51-EDA0-495C-AD3C-AF758639B55D}.Release|x86.Build.0 = Release|Any CPU
 		{9E90FAEA-D87F-428E-8C97-BC12FF53DF94}.Debug|Any CPU.ActiveCfg = Debug|x64
 		{9E90FAEA-D87F-428E-8C97-BC12FF53DF94}.Debug|Any CPU.Build.0 = Debug|x64
 		{9E90FAEA-D87F-428E-8C97-BC12FF53DF94}.Debug|Any CPU.Deploy.0 = Debug|x64

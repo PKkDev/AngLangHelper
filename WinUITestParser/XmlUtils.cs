@@ -31,8 +31,9 @@ public static class XmlUtils
         _xmlSchemaSet.Add("http://www.w3.org/2001/XMLSchema", fileXSD3.Path);
     }
 
-    public static List<ValidationError> ValidateXml(StorageFile file)
+    public static ValidationErrorModel ValidateXml(StorageFile file)
     {
+        ValidationErrorModel result = new();
         List<ValidationError> validateResult = new();
 
         try
@@ -58,10 +59,10 @@ public static class XmlUtils
             validateResult.Add(new ValidationError(0, 0, e.Message, ValidationErrorType.Error));
         }
 
-        return validateResult;
+        return new ValidationErrorModel(validateResult);
     }
 
-    public static List<ValidationError> ValidateXml(string xml)
+    public static ValidationErrorModel ValidateXml(string xml)
     {
         List<ValidationError> validateResult = new();
 
@@ -101,7 +102,7 @@ public static class XmlUtils
             validateResult.Add(new ValidationError(0, 0, e.Message, ValidationErrorType.Error));
         }
 
-        return validateResult;
+        return new ValidationErrorModel(validateResult);
     }
 
     public static string FormatXml(string xml)

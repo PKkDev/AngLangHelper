@@ -1,5 +1,40 @@
-﻿namespace WinUITestParser
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
+
+namespace WinUITestParser
 {
+    public class ValidationErrorModel : ObservableObject
+    {
+        public ObservableCollection<ValidationError> Errors { get; set; }
+
+        public int CountError { get; set; }
+        public int CountWarning { get; set; }
+
+        public ValidationErrorModel()
+        {
+            Errors = new();
+            CountError = 0;
+            CountWarning = 0;
+        }
+
+        public ValidationErrorModel(IEnumerable<ValidationError> errors)
+            : this()
+        {
+            Errors = new(errors);
+            CountError = errors.Where(x => x.Type == ValidationErrorType.Error).Count();
+            CountWarning = errors.Where(x => x.Type == ValidationErrorType.Warning).Count();
+        }
+
+        public void SetNoTarget(IEnumerable<ValidationError> errors)
+        {
+            foreach (var error in errors)
+                Errors.Add(error);
+            CountWarning += errors.Count();
+        }
+    }
+
     public class ValidationError
     {
         public int LineNumber { get; set; }
@@ -49,7 +84,7 @@
             };
         }
 
-        public override string ToString() 
+        public override string ToString()
             => $"{Type} Line: {LineNumber} Position: {LinePosition} : {Message}";
     }
 

@@ -32,15 +32,17 @@ namespace WinUITestParser
 
         public Dictionary<int, int> OriginLinePosDict { get; set; }
         public List<TransUnit> OriginTransUnits { get; set; }
-        public ObservableCollection<ValidationError> OriginValidationErrors { get; set; }
+        public ValidationErrorModel OriginValidation { get; set; }
 
         public Dictionary<int, int> TranslateLinePosDict { get; set; }
         public List<TransUnit> TranslateTransUnits { get; set; }
-        public ObservableCollection<ValidationError> TranslateValidationErrors { get; set; }
-        public ObservableCollection<ValidationError> TranslateNoTarget { get; set; }
+        public ValidationErrorModel TranslateValidation { get; set; }
 
         public MainWindow()
         {
+            OriginValidation = new();
+            TranslateValidation = new();
+
             InitializeComponent();
 
             Task task = Task.Run(async () => await XmlUtils.InitSchemas());
@@ -299,11 +301,10 @@ namespace WinUITestParser
         {
             editor1.TextDocument.GetText(TextGetOptions.None, out var xml);
             OriginLinePosDict = UpdateEditorLineDict(editor1, xml);
-            var validateResult = XmlUtils.ValidateXml(xml);
+            OriginValidation = XmlUtils.ValidateXml(xml);
+            OnPropertyChanged("OriginValidation");
 
-            OriginValidationErrors = new(validateResult);
-            OnPropertyChanged("OriginValidationErrors");
-            if (OriginValidationErrors.Any())
+            if (OriginValidation.Errors.Any())
             {
                 OrSubPanel.Height = 150;
                 OrSubPanelCloseIcon.Glyph = "\uE972";
@@ -316,12 +317,12 @@ namespace WinUITestParser
 
             ITextCharacterFormat baseFormat = editor1.Document.GetDefaultCharacterFormat();
 
-            if (validateResult.Any())
+            if (OriginValidation.Errors.Any())
             {
                 ITextCharacterFormat errFormat = editor1.Document.GetDefaultCharacterFormat();
                 errFormat.ForegroundColor = Colors.Red;
 
-                foreach (var item in validateResult)
+                foreach (var item in OriginValidation.Errors)
                 {
                     var line = OriginLinePosDict[item.LineNumber];
 
@@ -342,23 +343,16 @@ namespace WinUITestParser
         {
             editor2.TextDocument.GetText(TextGetOptions.None, out var xml);
             TranslateLinePosDict = UpdateEditorLineDict(editor2, xml);
-            var validateResult = XmlUtils.ValidateXml(xml);
-
-            TranslateValidationErrors = new();
+            TranslateValidation = XmlUtils.ValidateXml(xml);
 
             var noTargetList = TranslateTransUnits
                 .Where(x => string.IsNullOrEmpty(x.Target))
                 .Select(x => new ValidationError(x.GlobalLineNumber, 0, "Target not found", ValidationErrorType.Warning));
-            if (noTargetList.Any())
-                foreach (var item in noTargetList)
-                    TranslateValidationErrors.Add(item);
+            TranslateValidation.SetNoTarget(noTargetList);
 
-            if (validateResult.Any())
-                foreach (var item in validateResult)
-                    TranslateValidationErrors.Add(item);
+            OnPropertyChanged("TranslateValidation");
 
-            OnPropertyChanged("TranslateValidationErrors");
-            if (TranslateValidationErrors.Any())
+            if (TranslateValidation.Errors.Any())
             {
                 TrSubPanel.Height = 150;
                 TrSubPanelCloseIcon.Glyph = "\uE972";
@@ -371,23 +365,12 @@ namespace WinUITestParser
 
             ITextCharacterFormat baseFormat = editor2.Document.GetDefaultCharacterFormat();
 
-            if (validateResult.Any() || noTargetList.Any())
+            if (TranslateValidation.Errors.Any())
             {
                 ITextCharacterFormat errFormat = editor2.Document.GetDefaultCharacterFormat();
                 errFormat.ForegroundColor = Colors.Red;
 
-                foreach (var item in validateResult)
-                {
-                    var line = TranslateLinePosDict[item.LineNumber];
-
-                    var stPos = line + item.LinePosition;
-                    var newRange = editor2.Document.GetRange(stPos, stPos);
-                    newRange.Expand(TextRangeUnit.Line);
-
-                    newRange.CharacterFormat = errFormat;
-                }
-
-                foreach (var item in noTargetList)
+                foreach (var item in TranslateValidation.Errors)
                 {
                     var line = TranslateLinePosDict[item.LineNumber];
 
