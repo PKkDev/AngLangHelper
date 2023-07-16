@@ -1,4 +1,6 @@
-﻿using System.Xml;
+﻿using System.Threading.Tasks;
+
+using System.Xml;
 using System.Xml.Linq;
 using System.Xml.Schema;
 using System.Xml.XPath;
@@ -7,22 +9,36 @@ using System;
 using System.IO;
 using System.Text;
 using System.Collections.Generic;
+using System.Linq;
 
 using Windows.Storage;
-using System.Linq;
 
 namespace WinUITestParser;
 
 public static class XmlUtils
 {
-    public static List<ValidationError> ValidateXml(XmlSchemaSet xmlSchemaSet, StorageFile file)
+    private static XmlSchemaSet _xmlSchemaSet { get; set; }
+
+    public static async Task InitSchemas()
+    {
+        var fileXSD1 = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Assets/XmlForms/xliff-core-1.2-strict.xsd"));
+        var fileXSD2 = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Assets/XmlForms/xml.xsd"));
+        var fileXSD3 = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Assets/XmlForms/xsdschema.xsd"));
+
+        _xmlSchemaSet = new();
+        _xmlSchemaSet.Add("urn:oasis:names:tc:xliff:document:1.2", fileXSD1.Path);
+        _xmlSchemaSet.Add("http://www.w3.org/XML/1998/namespace", fileXSD2.Path);
+        _xmlSchemaSet.Add("http://www.w3.org/2001/XMLSchema", fileXSD3.Path);
+    }
+
+    public static List<ValidationError> ValidateXml(StorageFile file)
     {
         List<ValidationError> validateResult = new();
 
         try
         {
             XmlReaderSettings settings = new();
-            settings.Schemas = xmlSchemaSet;
+            settings.Schemas = _xmlSchemaSet;
             settings.ValidationEventHandler += (object sender, ValidationEventArgs args) =>
             {
                 validateResult.Add(new ValidationError(args.Exception.LineNumber, args.Exception.LinePosition, args.Message, args.Severity.ToString()));
@@ -45,7 +61,7 @@ public static class XmlUtils
         return validateResult;
     }
 
-    public static List<ValidationError> ValidateXml(XmlSchemaSet xmlSchemaSet, string xml)
+    public static List<ValidationError> ValidateXml(string xml)
     {
         List<ValidationError> validateResult = new();
 
@@ -55,7 +71,7 @@ public static class XmlUtils
             XDocument doc = XDocument.Parse(xml, opts);
 
             doc.Validate(
-                xmlSchemaSet,
+                _xmlSchemaSet,
                 (object sender, ValidationEventArgs args) =>
                 {
                     validateResult.Add(new ValidationError(args.Exception.LineNumber, args.Exception.LinePosition, args.Message, args.Severity.ToString()));

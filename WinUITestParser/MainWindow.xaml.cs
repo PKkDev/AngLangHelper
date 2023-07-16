@@ -1,5 +1,3 @@
-using System.Xml.Schema;
-
 using Windows.Storage;
 using Windows.Storage.Pickers;
 
@@ -29,8 +27,6 @@ namespace WinUITestParser
                 PropertyChanged(this, new PropertyChangedEventArgs(prop));
         }
 
-        private XmlSchemaSet _xmlSchemaSet { get; set; }
-
         private StorageFile OriginFile { get; set; }
         private StorageFile TranslateFile { get; set; }
 
@@ -47,23 +43,8 @@ namespace WinUITestParser
         {
             InitializeComponent();
 
-            Task task = Task.Run(async () =>
-            {
-                await InitSchemas();
-            });
+            Task task = Task.Run(async () => await XmlUtils.InitSchemas());
             task.Wait();
-        }
-
-        private async Task InitSchemas()
-        {
-            var fileXSD1 = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Assets/XmlForms/xliff-core-1.2-strict.xsd"));
-            var fileXSD2 = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Assets/XmlForms/xml.xsd"));
-            var fileXSD3 = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Assets/XmlForms/xsdschema.xsd"));
-
-            _xmlSchemaSet = new();
-            _xmlSchemaSet.Add("urn:oasis:names:tc:xliff:document:1.2", fileXSD1.Path);
-            _xmlSchemaSet.Add("http://www.w3.org/XML/1998/namespace", fileXSD2.Path);
-            _xmlSchemaSet.Add("http://www.w3.org/2001/XMLSchema", fileXSD3.Path);
         }
 
         public void CheckMatchesBtn_Click(object sender, RoutedEventArgs e)
@@ -318,7 +299,7 @@ namespace WinUITestParser
         {
             editor1.TextDocument.GetText(TextGetOptions.None, out var xml);
             OriginLinePosDict = UpdateEditorLineDict(editor1, xml);
-            var validateResult = XmlUtils.ValidateXml(_xmlSchemaSet, xml);
+            var validateResult = XmlUtils.ValidateXml(xml);
 
             OriginValidationErrors = new(validateResult);
             OnPropertyChanged("OriginValidationErrors");
@@ -361,7 +342,7 @@ namespace WinUITestParser
         {
             editor2.TextDocument.GetText(TextGetOptions.None, out var xml);
             TranslateLinePosDict = UpdateEditorLineDict(editor2, xml);
-            var validateResult = XmlUtils.ValidateXml(_xmlSchemaSet, xml);
+            var validateResult = XmlUtils.ValidateXml(xml);
 
             TranslateValidationErrors = new();
 
