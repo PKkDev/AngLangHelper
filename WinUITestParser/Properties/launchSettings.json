@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "WinUITestParser (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "WinUITestParser (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}
