@@ -30,10 +30,30 @@ namespace WinUITestParser
         private StorageFile OriginFile { get; set; }
         private StorageFile TranslateFile { get; set; }
 
+        private bool _isOriginLoading;
+        public bool IsOriginLoading
+        {
+            get => _isOriginLoading;
+            set
+            {
+                _isOriginLoading = value;
+                OnPropertyChanged("IsOriginLoading");
+            }
+        }
         public Dictionary<int, int> OriginLinePosDict { get; set; }
         public List<TransUnit> OriginTransUnits { get; set; }
         public ValidationErrorModel OriginValidation { get; set; }
 
+        private bool _isTranslateLoading;
+        public bool IsTranslateLoading
+        {
+            get => _isTranslateLoading;
+            set
+            {
+                _isTranslateLoading = value;
+                OnPropertyChanged("IsTranslateLoading");
+            }
+        }
         public Dictionary<int, int> TranslateLinePosDict { get; set; }
         public List<TransUnit> TranslateTransUnits { get; set; }
         public ValidationErrorModel TranslateValidation { get; set; }
@@ -297,8 +317,9 @@ namespace WinUITestParser
 
         #region Validate
 
-        public void ValidateOrBtn_Click(object sender, RoutedEventArgs e)
+        public async void ValidateOrBtn_Click(object sender, RoutedEventArgs e)
         {
+            IsOriginLoading = true;
             editor1.TextDocument.GetText(TextGetOptions.None, out var xml);
             OriginLinePosDict = UpdateEditorLineDict(editor1, xml);
             OriginValidation = XmlUtils.ValidateXml(xml);
@@ -337,6 +358,8 @@ namespace WinUITestParser
             {
                 editor1.Document.GetRange(0, xml.Length).CharacterFormat = baseFormat;
             }
+
+            IsOriginLoading = false;
         }
 
         public void ValidateTrBtn_Click(object sender, RoutedEventArgs e)
@@ -470,6 +493,8 @@ namespace WinUITestParser
             StorageFile file = await picker.PickSingleFileAsync();
             if (file != null)
             {
+                IsOriginLoading = true;
+
                 OriginFile = file;
                 editor1.Header = file.Name;
 
@@ -478,6 +503,8 @@ namespace WinUITestParser
 
                 OriginLinePosDict = UpdateEditorLineDict(editor1, xml);
                 OriginTransUnits = XmlUtils.MapXmlToObject(xml);
+
+                IsOriginLoading = false;
             }
         }
 
@@ -488,6 +515,8 @@ namespace WinUITestParser
             StorageFile file = await picker.PickSingleFileAsync();
             if (file != null)
             {
+                IsTranslateLoading = true;
+
                 TranslateFile = file;
                 editor2.Header = file.Name;
 
@@ -496,6 +525,8 @@ namespace WinUITestParser
 
                 TranslateLinePosDict = UpdateEditorLineDict(editor2, xml);
                 TranslateTransUnits = XmlUtils.MapXmlToObject(xml);
+
+                IsTranslateLoading = false;
             }
         }
 

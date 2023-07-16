@@ -1,7 +1,8 @@
-﻿using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Controls;
-using System;
+﻿using System;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Hosting;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
 
 namespace WinUITestParser
 {
@@ -11,6 +12,15 @@ namespace WinUITestParser
     public partial class App : Application
     {
         public static Window MainWindow;
+        public IHost Host { get; }
+
+        public static T GetService<T>() where T : class
+        {
+            if ((App.Current as App)!.Host.Services.GetService(typeof(T)) is not T service)
+                throw new ArgumentException($"{typeof(T)} needs to be registered in ConfigureServices within App.xaml.cs.");
+
+            return service;
+        }
 
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
@@ -19,6 +29,28 @@ namespace WinUITestParser
         public App()
         {
             InitializeComponent();
+
+            Host = Microsoft.Extensions.Hosting.Host.
+                CreateDefaultBuilder().
+                UseContentRoot(AppContext.BaseDirectory).
+                ConfigureServices((context, services) =>
+                {
+                    // Views and ViewModels
+                    //services.AddTransient<SettingsPage>();
+                    //services.AddTransient<SettingsViewModel>();
+
+                    //services.AddTransient<ShellPage>();
+                    //services.AddTransient<ShellViewModel>();
+
+                    //services.AddTransient<CapturePage>();
+                    //services.AddTransient<CaptureViewModel>();
+
+                    //services.AddTransient<MediaFolderPage>();
+                    //services.AddTransient<MediaFolderViewModel>();
+
+                    //services.AddSingleton<NavigationHelperService>();
+                })
+                .Build();
 
             UnhandledException += App_UnhandledException;
             TaskScheduler.UnobservedTaskException += TaskScheduler_UnobservedTaskException;
