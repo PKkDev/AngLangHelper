@@ -498,13 +498,23 @@ namespace WinUITestParser
                 OriginFile = file;
                 editor1.Header = file.Name;
 
-                var xml = await FileIO.ReadTextAsync(OriginFile);
-                editor1.TextDocument.SetText(TextSetOptions.None, xml);
+                var task = Task.Run(async () =>
+                {
+                    var xml = await FileIO.ReadTextAsync(OriginFile);
 
-                OriginLinePosDict = UpdateEditorLineDict(editor1, xml);
-                OriginTransUnits = XmlUtils.MapXmlToObject(xml);
+                    App.MainWindow.DispatcherQueue.TryEnqueue(() =>
+                    {
+                        editor1.TextDocument.SetText(TextSetOptions.None, xml);
+                        OriginLinePosDict = UpdateEditorLineDict(editor1, xml);
+                    });
 
-                IsOriginLoading = false;
+                    OriginTransUnits = XmlUtils.MapXmlToObject(xml);
+
+                    App.MainWindow.DispatcherQueue.TryEnqueue(() =>
+                    {
+                        IsOriginLoading = false;
+                    });
+                });
             }
         }
 
@@ -520,13 +530,23 @@ namespace WinUITestParser
                 TranslateFile = file;
                 editor2.Header = file.Name;
 
-                var xml = await FileIO.ReadTextAsync(TranslateFile);
-                editor2.TextDocument.SetText(TextSetOptions.None, xml);
+                var task = Task.Run(async () =>
+                {
+                    var xml = await FileIO.ReadTextAsync(TranslateFile);
 
-                TranslateLinePosDict = UpdateEditorLineDict(editor2, xml);
-                TranslateTransUnits = XmlUtils.MapXmlToObject(xml);
+                    App.MainWindow.DispatcherQueue.TryEnqueue(() =>
+                    {
+                        editor2.TextDocument.SetText(TextSetOptions.None, xml);
+                        TranslateLinePosDict = UpdateEditorLineDict(editor2, xml);
+                    });
 
-                IsTranslateLoading = false;
+                    TranslateTransUnits = XmlUtils.MapXmlToObject(xml);
+
+                    App.MainWindow.DispatcherQueue.TryEnqueue(() =>
+                    {
+                        IsTranslateLoading = false;
+                    });
+                });
             }
         }
 
@@ -550,8 +570,14 @@ namespace WinUITestParser
 
         public async void SaveOrBtn_Click(object sender, RoutedEventArgs e)
         {
+            IsOriginLoading = true;
+
             editor1.TextDocument.GetText(TextGetOptions.None, out var xml);
             await FileIO.WriteTextAsync(OriginFile, xml);
+
+            OriginTransUnits = XmlUtils.MapXmlToObject(xml);
+
+            IsOriginLoading = false;
         }
 
         public async void SaveTrBtn_Click(object sender, RoutedEventArgs e)
@@ -584,11 +610,14 @@ namespace WinUITestParser
 
         private async Task SaveTranslateFile()
         {
+            IsTranslateLoading = true;
+
             editor2.TextDocument.GetText(TextGetOptions.None, out var xml);
             await FileIO.WriteTextAsync(TranslateFile, xml);
 
             TranslateTransUnits = XmlUtils.MapXmlToObject(xml);
-            //ViewTransUnits(TranslateTransUnits, ContactPanel2);
+
+            IsTranslateLoading = false;
         }
 
         #endregion save file
