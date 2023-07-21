@@ -317,7 +317,7 @@ namespace WinUITestParser
 
         #region Validate
 
-        public async void ValidateOrBtn_Click(object sender, RoutedEventArgs e)
+        public void ValidateOrBtn_Click(object sender, RoutedEventArgs e)
         {
             IsOriginLoading = true;
             editor1.TextDocument.GetText(TextGetOptions.None, out var xml);
@@ -674,5 +674,3 @@ namespace WinUITestParser
 
     }
 }
-
-
