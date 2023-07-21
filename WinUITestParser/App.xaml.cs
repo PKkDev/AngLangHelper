@@ -41,6 +41,9 @@ namespace WinUITestParser
                     services.AddTransient<EditorView>();
                     services.AddTransient<EditorViewModel>();
 
+                    services.AddTransient<ShellView>();
+                    services.AddTransient<ShellViewModel>();
+
                     //services.AddSingleton<NavigationHelperService>();
                 })
                 .Build();

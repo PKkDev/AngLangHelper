@@ -13,6 +13,7 @@
   </PropertyGroup>
   <ItemGroup>
     <None Remove="MVVM\View\EditorView.xaml" />
+    <None Remove="MVVM\View\ShellView.xaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -65,6 +66,11 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Assets\StatusIcon\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="MVVM\View\ShellView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Page Update="MVVM\View\EditorView.xaml">
