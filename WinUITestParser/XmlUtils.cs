@@ -13,6 +13,8 @@ using System.Linq;
 
 using Windows.Storage;
 
+using WinUITestParser.MVVM.Model;
+
 namespace WinUITestParser;
 
 public static class XmlUtils

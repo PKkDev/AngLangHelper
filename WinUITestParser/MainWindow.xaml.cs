@@ -6,14 +6,15 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 
-using System.ComponentModel;
-using System.Collections.ObjectModel;
+using System.ComponentModel; 
 using System.Runtime.CompilerServices;
 
 using Microsoft.UI;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Text;
+
+using WinUITestParser.MVVM.Model;
 
 namespace WinUITestParser
 {
@@ -304,6 +305,7 @@ namespace WinUITestParser
             var xml = XmlUtils.MapObjectToXml(OriginTransUnits);
 
             editor2.Document.SetText(TextSetOptions.None, xml);
+            TranslateTransUnits = XmlUtils.MapXmlToObject(xml);
         }
 
         public void UpdateTrBtn_Click(object sender, RoutedEventArgs e)

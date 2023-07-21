@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using WinUITestParser.MVVM.View;
+using WinUITestParser.MVVM.ViewModel;
 
 namespace WinUITestParser
 {
@@ -35,18 +38,8 @@ namespace WinUITestParser
                 UseContentRoot(AppContext.BaseDirectory).
                 ConfigureServices((context, services) =>
                 {
-                    // Views and ViewModels
-                    //services.AddTransient<SettingsPage>();
-                    //services.AddTransient<SettingsViewModel>();
-
-                    //services.AddTransient<ShellPage>();
-                    //services.AddTransient<ShellViewModel>();
-
-                    //services.AddTransient<CapturePage>();
-                    //services.AddTransient<CaptureViewModel>();
-
-                    //services.AddTransient<MediaFolderPage>();
-                    //services.AddTransient<MediaFolderViewModel>();
+                    services.AddTransient<EditorView>();
+                    services.AddTransient<EditorViewModel>();
 
                     //services.AddSingleton<NavigationHelperService>();
                 })

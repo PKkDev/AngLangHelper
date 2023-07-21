@@ -11,6 +11,9 @@
     <UseWinUI>true</UseWinUI>
     <EnableMsixTooling>true</EnableMsixTooling>
   </PropertyGroup>
+  <ItemGroup>
+    <None Remove="MVVM\View\EditorView.xaml" />
+  </ItemGroup>
 
   <ItemGroup>
     <Content Include="Assets\SplashScreen.scale-200.png" />
@@ -62,6 +65,11 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Assets\StatusIcon\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="MVVM\View\EditorView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
 
   <!-- 
