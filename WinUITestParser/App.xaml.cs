@@ -6,6 +6,7 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using WinUITestParser.MVVM.View;
 using WinUITestParser.MVVM.ViewModel;
+using WinUITestParser.Services;
 
 namespace WinUITestParser
 {
@@ -38,6 +39,8 @@ namespace WinUITestParser
                 UseContentRoot(AppContext.BaseDirectory).
                 ConfigureServices((context, services) =>
                 {
+                    services.AddSingleton<XmlUtilService>();
+
                     services.AddTransient<EditorView>();
                     services.AddTransient<EditorViewModel>();
 
