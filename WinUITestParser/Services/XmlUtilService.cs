@@ -21,7 +21,16 @@ namespace WinUITestParser.Services
     {
         private XmlSchemaSet _xmlSchemaSet { get; set; }
 
-        public async Task InitSchemas()
+        public XmlUtilService()
+        {
+            if (_xmlSchemaSet == null)
+            {
+                Task task = Task.Run(async () => await InitSchemas());
+                task.Wait();
+            }
+        }
+
+        private async Task InitSchemas()
         {
             var fileXSD1 = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Assets/XmlForms/xliff-core-1.2-strict.xsd"));
             var fileXSD2 = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Assets/XmlForms/xml.xsd"));

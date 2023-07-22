@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace WinUITestParser.MVVM.Model
+namespace WinUITestParser.MVVM.Model;
 
 public class TransUnit
 {
