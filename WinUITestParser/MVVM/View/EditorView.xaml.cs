@@ -62,6 +62,8 @@ namespace WinUITestParser.MVVM.View
             TranslateValidation = new();
 
             InitializeComponent();
+
+            ViewModel.Initialize(editor1, editor2);
         }
 
         public void CheckMatchesBtn_Click(object sender, RoutedEventArgs e)
@@ -479,88 +481,6 @@ namespace WinUITestParser.MVVM.View
         }
 
         #endregion format text
-
-        #region open file
-
-        public async void OpenOrBtn_Click(object sender, RoutedEventArgs e)
-        {
-            var picker = GetOpenFilePicker();
-
-            StorageFile file = await picker.PickSingleFileAsync();
-            if (file != null)
-            {
-                IsOriginLoading = true;
-
-                OriginFile = file;
-                editor1.Header = file.Name;
-
-                var task = Task.Run(async () =>
-                {
-                    var xml = await FileIO.ReadTextAsync(OriginFile);
-
-                    App.MainWindow.DispatcherQueue.TryEnqueue(() =>
-                    {
-                        editor1.TextDocument.SetText(TextSetOptions.None, xml);
-                        OriginLinePosDict = UpdateEditorLineDict(editor1, xml);
-                    });
-
-                    OriginTransUnits = XmlUtils.MapXmlToObject(xml);
-
-                    App.MainWindow.DispatcherQueue.TryEnqueue(() =>
-                    {
-                        IsOriginLoading = false;
-                    });
-                });
-            }
-        }
-
-        public async void OpenTrBtn_Click(object sender, RoutedEventArgs e)
-        {
-            var picker = GetOpenFilePicker();
-
-            StorageFile file = await picker.PickSingleFileAsync();
-            if (file != null)
-            {
-                IsTranslateLoading = true;
-
-                TranslateFile = file;
-                editor2.Header = file.Name;
-
-                var task = Task.Run(async () =>
-                {
-                    var xml = await FileIO.ReadTextAsync(TranslateFile);
-
-                    App.MainWindow.DispatcherQueue.TryEnqueue(() =>
-                    {
-                        editor2.TextDocument.SetText(TextSetOptions.None, xml);
-                        TranslateLinePosDict = UpdateEditorLineDict(editor2, xml);
-                    });
-
-                    TranslateTransUnits = XmlUtils.MapXmlToObject(xml);
-
-                    App.MainWindow.DispatcherQueue.TryEnqueue(() =>
-                    {
-                        IsTranslateLoading = false;
-                    });
-                });
-            }
-        }
-
-        private FileOpenPicker GetOpenFilePicker()
-        {
-            FileOpenPicker picker = new();
-
-            var hwnd = WinRT.Interop.WindowNative.GetWindowHandle(App.MainWindow);
-            WinRT.Interop.InitializeWithWindow.Initialize(picker, hwnd);
-
-            picker.ViewMode = PickerViewMode.Thumbnail;
-            picker.SuggestedStartLocation = PickerLocationId.DocumentsLibrary;
-            picker.FileTypeFilter.Add(".xlf");
-
-            return picker;
-        }
-
-        #endregion open file
 
         #region save file
 

@@ -25,7 +25,7 @@
                 <CommandBarFlyout x:Name="OrDocumentCommandsFlyout">
                     <CommandBarFlyout.SecondaryCommands>
 
-                        <AppBarButton Label="Открыть" Click="OpenOrBtn_Click">
+                        <AppBarButton Label="Открыть" Command="{x:Bind ViewModel.OpenOrCmd}">
                             <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE7C3;"/>
                         </AppBarButton>
 
@@ -115,7 +115,7 @@
 
             </StackPanel>
 
-            <controls:Loading IsLoading="{x:Bind IsOriginLoading, Mode=OneWay}">
+            <controls:Loading IsLoading="{x:Bind ViewModel.IsOriginLoading, Mode=OneWay}">
                 <controls:Loading.Background>
                     <brushes:AcrylicBrush TintColor="Black" TintOpacity="0.63" BlurAmount="2"/>
                 </controls:Loading.Background>
@@ -134,7 +134,7 @@
                 <CommandBarFlyout x:Name="TrDocumentCommandsFlyout">
                     <CommandBarFlyout.SecondaryCommands>
 
-                        <AppBarButton Label="Открыть" Click="OpenTrBtn_Click">
+                        <AppBarButton Label="Открыть" Command="{x:Bind ViewModel.OpenTrCmd}">
                             <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE7C3;"/>
                         </AppBarButton>
 
@@ -219,7 +219,7 @@
 
             </StackPanel>
 
-            <controls:Loading IsLoading="{x:Bind IsTranslateLoading, Mode=OneWay}">
+            <controls:Loading IsLoading="{x:Bind ViewModel.IsTranslateLoading, Mode=OneWay}">
                 <controls:Loading.Background>
                     <brushes:AcrylicBrush TintColor="Black" TintOpacity="0.63" BlurAmount="2"/>
                 </controls:Loading.Background>
