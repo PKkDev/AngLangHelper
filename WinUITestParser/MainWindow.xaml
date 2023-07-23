@@ -8,6 +8,8 @@
     xmlns:brushes="using:CommunityToolkit.WinUI.UI.Media"
     mc:Ignorable="d">
 
+    <TextBlock Text="тест"></TextBlock>
+
     <!--<Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Padding="5" ColumnSpacing="5">
 
         <Grid.ColumnDefinitions>

@@ -15,7 +15,8 @@ namespace WinUITestParser.Services
 
         private readonly Dictionary<string, Type> _pages = new()
         {
-            { "EditorView", typeof(EditorView) }
+            { "EditorView", typeof(EditorView) },
+            { "Settings", typeof(SettingsView) }
         };
 
         public NavigationHelperService() { }

@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <Page
     x:Class="WinUITestParser.MVVM.View.EditorView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -19,7 +20,9 @@
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
 
-        <Grid Grid.Column="0">
+        <TextBlock Text="тест"></TextBlock>
+
+        <!--<Grid Grid.Column="0">
 
             <Grid.Resources>
                 <CommandBarFlyout x:Name="OrDocumentCommandsFlyout">
@@ -230,7 +233,7 @@
                 </ContentControl>
             </controls:Loading>
 
-        </Grid>
+        </Grid>-->
 
     </Grid>
 
