@@ -8,7 +8,7 @@
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-        <Grid x:Name="AppTitleBar"
+        <!--<Grid x:Name="AppTitleBar"
               Canvas.ZIndex="1"
               Height="{Binding ElementName=NavView, Path=CompactPaneLength}"
               IsHitTestVisible="True"
@@ -25,7 +25,7 @@
                        Text="Window capture"
                        TextWrapping="NoWrap"
                        Margin="28,0,0,0"/>
-        </Grid>
+        </Grid>-->
 
         <NavigationView x:Name="NavView"
                         Canvas.ZIndex="0"
@@ -53,7 +53,7 @@
             </NavigationView.MenuItems>
 
             <!--Margin="56,24,56,0" -->
-            <Grid Padding="15">
+            <Grid Padding="0">
 
                 <!--<InfoBar x:Name="PageInfoBar" Canvas.ZIndex="2" IsOpen="False" HorizontalAlignment="Right" />-->
 

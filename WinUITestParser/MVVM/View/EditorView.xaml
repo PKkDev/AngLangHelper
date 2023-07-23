@@ -8,7 +8,7 @@
     xmlns:brushes="using:CommunityToolkit.WinUI.UI.Media"
     mc:Ignorable="d">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Padding="5" ColumnSpacing="5">
+    <Grid Padding="5" ColumnSpacing="5">
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition></ColumnDefinition>
