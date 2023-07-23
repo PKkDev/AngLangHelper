@@ -84,9 +84,9 @@
                     </Grid.ColumnDefinitions>
 
                     <StackPanel Grid.Column="0" HorizontalAlignment="Left" Orientation="Horizontal" Spacing="5" >
-                        <Image VerticalAlignment="Center" Height="15" Width="15" Source="Assets/StatusIcon/error.png"/>
+                        <Image VerticalAlignment="Center" Height="15" Width="15" Source="ms-appx:///Assets/StatusIcon/error.png"/>
                         <TextBlock Text="{x:Bind OriginValidation.CountError, Mode=OneWay}"/>
-                        <Image VerticalAlignment="Center" Height="15" Width="15" Source="Assets/StatusIcon/warning.png"/>
+                        <Image VerticalAlignment="Center" Height="15" Width="15" Source="ms-appx:///Assets/StatusIcon/warning.png"/>
                         <TextBlock Text="{x:Bind OriginValidation.CountWarning, Mode=OneWay}"/>
                     </StackPanel>
 
@@ -188,9 +188,9 @@
                     </Grid.ColumnDefinitions>
 
                     <StackPanel Grid.Column="0" HorizontalAlignment="Left" Orientation="Horizontal" Spacing="5" >
-                        <Image VerticalAlignment="Center" Height="15" Width="15" Source="Assets/StatusIcon/error.png"/>
+                        <Image VerticalAlignment="Center" Height="15" Width="15" Source="ms-appx:///Assets/StatusIcon/error.png"/>
                         <TextBlock Text="{x:Bind TranslateValidation.CountError, Mode=OneWay}"/>
-                        <Image VerticalAlignment="Center" Height="15" Width="15" Source="Assets/StatusIcon/warning.png"/>
+                        <Image VerticalAlignment="Center" Height="15" Width="15" Source="ms-appx:///Assets/StatusIcon/warning.png"/>
                         <TextBlock Text="{x:Bind TranslateValidation.CountWarning, Mode=OneWay}"/>
                     </StackPanel>
 
