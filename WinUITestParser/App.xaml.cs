@@ -17,6 +17,7 @@ namespace WinUITestParser
     {
         public static Window MainWindow;
         public IHost Host { get; }
+
         private UIElement? _shell { get; set; }
 
         public static T GetService<T>() where T : class
@@ -51,8 +52,6 @@ namespace WinUITestParser
 
                     services.AddTransient<ShellView>();
                     services.AddTransient<ShellViewModel>();
-
-                    //services.AddSingleton<NavigationHelperService>();
                 })
                 .Build();
 
@@ -86,7 +85,6 @@ namespace WinUITestParser
         protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
         {
             MainWindow = new MainWindow();
-
 
             _shell = App.GetService<ShellView>();
             MainWindow.Content = _shell ?? new Frame();

@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <Page
     x:Class="WinUITestParser.MVVM.View.EditorView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -20,39 +19,37 @@
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
 
-        <TextBlock Text="òåñò"></TextBlock>
-
-        <!--<Grid Grid.Column="0">
+        <Grid Grid.Column="0">
 
             <Grid.Resources>
                 <CommandBarFlyout x:Name="OrDocumentCommandsFlyout">
                     <CommandBarFlyout.SecondaryCommands>
 
-                        <AppBarButton Label="Îòêðûòü" Click="OpenOrBtn_Click">
+                        <AppBarButton Label="ÐžÑ‚ÐºÑ€Ñ‹Ñ‚ÑŒ" Click="OpenOrBtn_Click">
                             <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE7C3;"/>
                         </AppBarButton>
 
-                        <AppBarButton Label="Ñîõðàíèòü" Icon="Save" Click="SaveOrBtn_Click"/>
+                        <AppBarButton Label="Ð¡Ð¾Ñ…Ñ€Ð°Ð½Ð¸Ñ‚ÑŒ" Icon="Save" Click="SaveOrBtn_Click"/>
 
-                        <AppBarButton Label="Ôîðìàòèðîâàòü" Click="FormatOrBtn_Click" >
+                        <AppBarButton Label="Ð¤Ð¾Ñ€Ð¼Ð°Ñ‚Ð¸Ñ€Ð¾Ð²Ð°Ñ‚ÑŒ" Click="FormatOrBtn_Click" >
                             <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE8A4;"/>
                         </AppBarButton>
 
-                        <AppBarButton Label="Âàëèäèðîâàòü" Click="ValidateOrBtn_Click" >
+                        <AppBarButton Label="Ð’Ð°Ð»Ð¸Ð´Ð¸Ñ€Ð¾Ð²Ð°Ñ‚ÑŒ" Click="ValidateOrBtn_Click" >
                             <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xF87B;"/>
                         </AppBarButton>
 
-                        <AppBarButton Label="Àíàëèçèðîâàòü" Click="AnalyzOrBtn_Click" >
+                        <AppBarButton Label="ÐÐ½Ð°Ð»Ð¸Ð·Ð¸Ñ€Ð¾Ð²Ð°Ñ‚ÑŒ" Click="AnalyzOrBtn_Click" >
                             <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xECAA;"/>
                         </AppBarButton>
 
                         <AppBarSeparator/>
 
-                        <AppBarButton Label="Ñîçäàòü ïåðåâîä" Click="CreateTranslateBtn_Click" >
+                        <AppBarButton Label="Ð¡Ð¾Ð·Ð´Ð°Ñ‚ÑŒ Ð¿ÐµÑ€ÐµÐ²Ð¾Ð´" Click="CreateTranslateBtn_Click" >
                             <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xF2B7;"/>
                         </AppBarButton>
 
-                        <AppBarButton Label="Ñðàâíèòü" Click="CheckMatchesBtn_Click" >
+                        <AppBarButton Label="Ð¡Ñ€Ð°Ð²Ð½Ð¸Ñ‚ÑŒ" Click="CheckMatchesBtn_Click" >
                             <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE73A;"/>
                         </AppBarButton>
 
@@ -137,27 +134,27 @@
                 <CommandBarFlyout x:Name="TrDocumentCommandsFlyout">
                     <CommandBarFlyout.SecondaryCommands>
 
-                        <AppBarButton Label="Îòêðûòü" Click="OpenTrBtn_Click">
+                        <AppBarButton Label="ÐžÑ‚ÐºÑ€Ñ‹Ñ‚ÑŒ" Click="OpenTrBtn_Click">
                             <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE7C3;"/>
                         </AppBarButton>
 
-                        <AppBarButton Label="Ñîõðàíèòü" Icon="Save" Click="SaveTrBtn_Click"/>
+                        <AppBarButton Label="Ð¡Ð¾Ñ…Ñ€Ð°Ð½Ð¸Ñ‚ÑŒ" Icon="Save" Click="SaveTrBtn_Click"/>
 
-                        <AppBarButton Label="Ôîðìàòèðîâàòü" Click="FormatTrBtn_Click" >
+                        <AppBarButton Label="Ð¤Ð¾Ñ€Ð¼Ð°Ñ‚Ð¸Ñ€Ð¾Ð²Ð°Ñ‚ÑŒ" Click="FormatTrBtn_Click" >
                             <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE8A4;"/>
                         </AppBarButton>
 
-                        <AppBarButton Label="Âàëèäèðîâàòü" Click="ValidateTrBtn_Click" >
+                        <AppBarButton Label="Ð’Ð°Ð»Ð¸Ð´Ð¸Ñ€Ð¾Ð²Ð°Ñ‚ÑŒ" Click="ValidateTrBtn_Click" >
                             <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE8D3;"/>
                         </AppBarButton>
 
-                        <AppBarButton Label="Àíàëèçèðîâàòü" Click="AnalyzTrBtn_Click" >
+                        <AppBarButton Label="ÐÐ½Ð°Ð»Ð¸Ð·Ð¸Ñ€Ð¾Ð²Ð°Ñ‚ÑŒ" Click="AnalyzTrBtn_Click" >
                             <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xECAA;"/>
                         </AppBarButton>
 
                         <AppBarSeparator/>
 
-                        <AppBarButton Label="Àêòóàëèçèðîâàòü" Click="UpdateTrBtn_Click" >
+                        <AppBarButton Label="ÐÐºÑ‚ÑƒÐ°Ð»Ð¸Ð·Ð¸Ñ€Ð¾Ð²Ð°Ñ‚ÑŒ" Click="UpdateTrBtn_Click" >
                             <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE72C;"/>
                         </AppBarButton>
 
@@ -233,7 +230,7 @@
                 </ContentControl>
             </controls:Loading>
 
-        </Grid>-->
+        </Grid>
 
     </Grid>
 
