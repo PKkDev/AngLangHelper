@@ -105,8 +105,8 @@ namespace WinUITestParser.Services
                     }
                     catch (Exception) { }
                 }
-
-                validateResult.Add(new ValidationError(e.LineNumber, e.LinePosition, e.Message, ValidationErrorType.Error));
+                else
+                    validateResult.Add(new ValidationError(e.LineNumber, e.LinePosition, e.Message, ValidationErrorType.Error));
             }
             catch (Exception e)
             {

@@ -9,9 +9,9 @@ using WinUITestParser.MVVM.Model;
 using WinUITestParser.Services;
 using System;
 using Microsoft.UI.Text;
-using Microsoft.UI.Xaml;
-using Microsoft.UI;
 using System.Linq;
+using CommunityToolkit.WinUI.Helpers;
+using Microsoft.VisualBasic;
 
 namespace WinUITestParser.MVVM.ViewModel
 {
@@ -21,6 +21,11 @@ namespace WinUITestParser.MVVM.ViewModel
 
         private RichEditBox _editor1 { get; set; }
         private RichEditBox _editor2 { get; set; }
+
+        private ITextCharacterFormat baseFormat { get; set; }
+        private ITextCharacterFormat errFormat { get; set; }
+        private ITextCharacterFormat newFormat { get; set; }
+        private ITextCharacterFormat notFoundFormat { get; set; }
 
         private StorageFile OriginFile { get; set; }
         private StorageFile TranslateFile { get; set; }
@@ -77,7 +82,7 @@ namespace WinUITestParser.MVVM.ViewModel
             AnalyzOrCmd = new RelayCommand(async () => await AnalyzOr());
             CheckMatchesCmd = new RelayCommand(async () => await CheckMatches());
             CreateTranslateCmd = new RelayCommand(async () => await CreateTranslate());
-            SubPanelOrCloseCmd = new RelayCommand(() => SubPanelOrClose());
+            SubPanelOrCloseCmd = new RelayCommand(() => OriginSubPanel.ChangeState());
             ViewErrorOrCmd = new RelayCommand<ValidationError>((ValidationError error) => ViewErrorOr(error));
 
             OpenTrCmd = new AsyncRelayCommand(OpenTr);
@@ -86,7 +91,7 @@ namespace WinUITestParser.MVVM.ViewModel
             ValidateTrCmd = new RelayCommand(async () => await ValidateTr());
             AnalyzTrCmd = new RelayCommand(async () => await AnalyzTr());
             UpdateTrCmd = new RelayCommand(async () => await UpdateTr());
-            SubPanelTrCloseCmd = new RelayCommand(() => SubPanelTrClose());
+            SubPanelTrCloseCmd = new RelayCommand(() => TranslateSubPanel.ChangeState());
             ViewErrorTrCmd = new RelayCommand<ValidationError>((ValidationError error) => ViewErrorTr(error));
         }
 
@@ -94,6 +99,20 @@ namespace WinUITestParser.MVVM.ViewModel
         {
             _editor1 = editor1;
             _editor2 = editor2;
+
+            var editorFormat = _editor1.Document.GetDefaultCharacterFormat();
+
+            baseFormat = editorFormat.GetClone();
+
+            errFormat = editorFormat.GetClone();
+            errFormat.BackgroundColor = ColorHelper.ToColor("#ff4d4f");
+            errFormat.ForegroundColor = ColorHelper.ToColor("#ffffff");
+
+            newFormat = editorFormat.GetClone();
+            newFormat.ForegroundColor = ColorHelper.ToColor("#52c41a");
+
+            notFoundFormat = editorFormat.GetClone();
+            notFoundFormat.ForegroundColor = ColorHelper.ToColor("#ff4d4f");
         }
 
         public async Task CheckMatches()
@@ -224,12 +243,6 @@ namespace WinUITestParser.MVVM.ViewModel
                     }
                 }
 
-                ITextCharacterFormat newFormat = _editor1.Document.GetDefaultCharacterFormat();
-                newFormat.ForegroundColor = Colors.Green;
-
-                ITextCharacterFormat notFoundFormat = _editor1.Document.GetDefaultCharacterFormat();
-                notFoundFormat.ForegroundColor = Colors.Red;
-
                 foreach (var item in OriginTransUnits)
                 {
                     if (item.IsNew)
@@ -348,6 +361,7 @@ namespace WinUITestParser.MVVM.ViewModel
         private async Task ValidateOr()
         {
             IsOriginLoading = true;
+
             _editor1.TextDocument.GetText(TextGetOptions.None, out var xml);
             OriginLinePosDict = UpdateEditorLineDict(_editor1, xml);
             OriginValidation = _xmlUtilService.ValidateXml(xml);
@@ -355,22 +369,6 @@ namespace WinUITestParser.MVVM.ViewModel
             if (OriginValidation.Errors.Any())
             {
                 OriginSubPanel.Open();
-                //OrSubPanel.Height = 150;
-                //OrSubPanelCloseIcon.Glyph = "\uE972";
-            }
-            else
-            {
-                OriginSubPanel.Close();
-                //OrSubPanel.Height = 30;
-                //OrSubPanelCloseIcon.Glyph = "\uE971";
-            }
-
-            ITextCharacterFormat baseFormat = _editor1.Document.GetDefaultCharacterFormat();
-
-            if (OriginValidation.Errors.Any())
-            {
-                ITextCharacterFormat errFormat = _editor1.Document.GetDefaultCharacterFormat();
-                errFormat.ForegroundColor = Colors.Red;
 
                 foreach (var item in OriginValidation.Errors)
                 {
@@ -385,6 +383,8 @@ namespace WinUITestParser.MVVM.ViewModel
             }
             else
             {
+                OriginSubPanel.Close();
+
                 _editor1.Document.GetRange(0, xml.Length).CharacterFormat = baseFormat;
             }
 
@@ -399,28 +399,12 @@ namespace WinUITestParser.MVVM.ViewModel
 
             var noTargetList = TranslateTransUnits
                 .Where(x => string.IsNullOrEmpty(x.Target))
-                .Select(x => new ValidationError(x.GlobalLineNumber, 0, "Target not found", ValidationErrorType.Warning));
+                .Select(x => new ValidationError(x.GlobalLineNumber, 0, "Target is empty", ValidationErrorType.Warning));
             TranslateValidation.SetNoTarget(noTargetList);
 
             if (TranslateValidation.Errors.Any())
             {
                 TranslateSubPanel.Open();
-                //TrSubPanel.Height = 150;
-                //TrSubPanelCloseIcon.Glyph = "\uE972";
-            }
-            else
-            {
-                TranslateSubPanel.Close();
-                //TrSubPanel.Height = 30;
-                //TrSubPanelCloseIcon.Glyph = "\uE971";
-            }
-
-            ITextCharacterFormat baseFormat = _editor2.Document.GetDefaultCharacterFormat();
-
-            if (TranslateValidation.Errors.Any())
-            {
-                ITextCharacterFormat errFormat = _editor2.Document.GetDefaultCharacterFormat();
-                errFormat.ForegroundColor = Colors.Red;
 
                 foreach (var item in TranslateValidation.Errors)
                 {
@@ -435,15 +419,10 @@ namespace WinUITestParser.MVVM.ViewModel
             }
             else
             {
+                TranslateSubPanel.Close();
+
                 _editor2.Document.GetRange(0, xml.Length).CharacterFormat = baseFormat;
             }
-        }
-
-        private void SubPanelOrClose()
-        {
-            OriginSubPanel.ChangeState();
-            //OrSubPanel.Height = OrSubPanel.Height == 30 ? 150 : 30;
-            //OrSubPanelCloseIcon.Glyph = OrSubPanel.Height == 30 ? "\uE971" : "\uE972";
         }
 
         private void ViewErrorOr(ValidationError error)
@@ -452,13 +431,6 @@ namespace WinUITestParser.MVVM.ViewModel
             var newRange = _editor1.Document.GetRange(line, line + 1);
             newRange.Expand(TextRangeUnit.Line);
             newRange.ScrollIntoView(PointOptions.Start);
-        }
-
-        private void SubPanelTrClose()
-        {
-            TranslateSubPanel.ChangeState();
-            //TrSubPanel.Height = TrSubPanel.Height == 30 ? 150 : 30;
-            //TrSubPanelCloseIcon.Glyph = TrSubPanel.Height == 30 ? "\uE971" : "\uE972";
         }
 
         private void ViewErrorTr(ValidationError error)
