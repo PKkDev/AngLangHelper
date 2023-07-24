@@ -6,6 +6,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls="using:CommunityToolkit.WinUI.UI.Controls"
     xmlns:brushes="using:CommunityToolkit.WinUI.UI.Media"
+    xmlns:helperProperties="using:WinUITestParser.Helpers.Properties"
     mc:Ignorable="d">
 
     <Grid Padding="5" ColumnSpacing="5">
@@ -29,27 +30,27 @@
                             <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE7C3;"/>
                         </AppBarButton>
 
-                        <AppBarButton Label="Сохранить" Icon="Save" Click="SaveOrBtn_Click"/>
+                        <AppBarButton Label="Сохранить" Icon="Save" Command="{x:Bind ViewModel.SaveOrCmd}"/>
 
-                        <AppBarButton Label="Форматировать" Click="FormatOrBtn_Click" >
+                        <AppBarButton Label="Форматировать" Command="{x:Bind ViewModel.FormatOrCmd}" >
                             <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE8A4;"/>
                         </AppBarButton>
 
-                        <AppBarButton Label="Валидировать" Click="ValidateOrBtn_Click" >
+                        <AppBarButton Label="Валидировать" Command="{x:Bind ViewModel.ValidateOrCmd}" >
                             <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xF87B;"/>
                         </AppBarButton>
 
-                        <AppBarButton Label="Анализировать" Click="AnalyzOrBtn_Click" >
+                        <AppBarButton Label="Анализировать" Command="{x:Bind ViewModel.AnalyzOrCmd}" >
                             <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xECAA;"/>
                         </AppBarButton>
 
                         <AppBarSeparator/>
 
-                        <AppBarButton Label="Создать перевод" Click="CreateTranslateBtn_Click" >
+                        <AppBarButton Label="Создать перевод" Command="{x:Bind ViewModel.CreateTranslateCmd}" >
                             <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xF2B7;"/>
                         </AppBarButton>
 
-                        <AppBarButton Label="Сравнить" Click="CheckMatchesBtn_Click" >
+                        <AppBarButton Label="Сравнить" Command="{x:Bind ViewModel.CheckMatchesCmd}" >
                             <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE73A;"/>
                         </AppBarButton>
 
@@ -74,7 +75,7 @@
                 SelectionFlyout="{x:Bind OrDocumentCommandsFlyout}"
                 ContextFlyout="{x:Bind OrDocumentCommandsFlyout}"/>
 
-            <StackPanel x:Name="OrSubPanel" VerticalAlignment="Bottom" Height="30" Padding="5" BorderBrush="DimGray" BorderThickness="1" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+            <StackPanel x:Name="OrSubPanel" VerticalAlignment="Bottom" Height="{x:Bind ViewModel.OriginSubPanel.Height, Mode=OneWay}" Padding="5" BorderBrush="DimGray" BorderThickness="1" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
                 <Grid Height="18" Padding="5 0">
 
@@ -85,19 +86,19 @@
 
                     <StackPanel Grid.Column="0" HorizontalAlignment="Left" Orientation="Horizontal" Spacing="5" >
                         <Image VerticalAlignment="Center" Height="15" Width="15" Source="ms-appx:///Assets/StatusIcon/error.png"/>
-                        <TextBlock Text="{x:Bind OriginValidation.CountError, Mode=OneWay}"/>
+                        <TextBlock Text="{x:Bind ViewModel.OriginValidation.CountError, Mode=OneWay}"/>
                         <Image VerticalAlignment="Center" Height="15" Width="15" Source="ms-appx:///Assets/StatusIcon/warning.png"/>
-                        <TextBlock Text="{x:Bind OriginValidation.CountWarning, Mode=OneWay}"/>
+                        <TextBlock Text="{x:Bind ViewModel.OriginValidation.CountWarning, Mode=OneWay}"/>
                     </StackPanel>
 
-                    <Button  Grid.Column="1" HorizontalAlignment="Right"  Padding="10 5" Click="OrSubPanelClose_Click">
-                        <FontIcon x:Name="OrSubPanelCloseIcon" FontSize="10" Glyph="&#xE971;" />
+                    <Button  Grid.Column="1" HorizontalAlignment="Right"  Padding="10 5" Command="{x:Bind ViewModel.SubPanelOrCloseCmd}">
+                        <FontIcon x:Name="OrSubPanelCloseIcon" FontSize="10" Glyph="{x:Bind ViewModel.OriginSubPanel.Glyph, Mode=OneWay}" />
                     </Button>
 
                 </Grid>
 
                 <ScrollViewer Height="118">
-                    <ListView ItemsSource="{x:Bind OriginValidation.Errors, Mode=TwoWay}" SelectionMode="None" IsItemClickEnabled="True" ItemClick="ViewOrErrorItem_Click" >
+                    <ListView ItemsSource="{x:Bind ViewModel.OriginValidation.Errors, Mode=TwoWay}" SelectionMode="None" IsItemClickEnabled="True" helperProperties:ItemClickCommand.Command="{x:Bind ViewModel.ViewErrorOrCmd}">
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <Grid ColumnSpacing="5">
@@ -138,23 +139,23 @@
                             <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE7C3;"/>
                         </AppBarButton>
 
-                        <AppBarButton Label="Сохранить" Icon="Save" Click="SaveTrBtn_Click"/>
+                        <AppBarButton Label="Сохранить" Icon="Save" Command="{x:Bind ViewModel.SaveTrCmd}"/>
 
-                        <AppBarButton Label="Форматировать" Click="FormatTrBtn_Click" >
+                        <AppBarButton Label="Форматировать" Command="{x:Bind ViewModel.FormatTrCmd}" >
                             <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE8A4;"/>
                         </AppBarButton>
 
-                        <AppBarButton Label="Валидировать" Click="ValidateTrBtn_Click" >
+                        <AppBarButton Label="Валидировать" Command="{x:Bind ViewModel.ValidateTrCmd}" >
                             <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE8D3;"/>
                         </AppBarButton>
 
-                        <AppBarButton Label="Анализировать" Click="AnalyzTrBtn_Click" >
+                        <AppBarButton Label="Анализировать" Command="{x:Bind ViewModel.AnalyzTrCmd}" >
                             <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xECAA;"/>
                         </AppBarButton>
 
                         <AppBarSeparator/>
 
-                        <AppBarButton Label="Актуализировать" Click="UpdateTrBtn_Click" >
+                        <AppBarButton Label="Актуализировать" Command="{x:Bind ViewModel.UpdateTrCmd}" >
                             <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE72C;"/>
                         </AppBarButton>
 
@@ -178,7 +179,7 @@
                 SelectionFlyout="{x:Bind TrDocumentCommandsFlyout}"
                 ContextFlyout="{x:Bind TrDocumentCommandsFlyout}"/>
 
-            <StackPanel x:Name="TrSubPanel" VerticalAlignment="Bottom" Height="30" Padding="5" BorderBrush="DimGray" BorderThickness="1" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+            <StackPanel x:Name="TrSubPanel" VerticalAlignment="Bottom" Height="{x:Bind ViewModel.TranslateSubPanel.Height, Mode=OneWay}" Padding="5" BorderBrush="DimGray" BorderThickness="1" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
                 <Grid Height="18" Padding="5 0">
 
@@ -189,19 +190,19 @@
 
                     <StackPanel Grid.Column="0" HorizontalAlignment="Left" Orientation="Horizontal" Spacing="5" >
                         <Image VerticalAlignment="Center" Height="15" Width="15" Source="ms-appx:///Assets/StatusIcon/error.png"/>
-                        <TextBlock Text="{x:Bind TranslateValidation.CountError, Mode=OneWay}"/>
+                        <TextBlock Text="{x:Bind ViewModel.TranslateValidation.CountError, Mode=OneWay}"/>
                         <Image VerticalAlignment="Center" Height="15" Width="15" Source="ms-appx:///Assets/StatusIcon/warning.png"/>
-                        <TextBlock Text="{x:Bind TranslateValidation.CountWarning, Mode=OneWay}"/>
+                        <TextBlock Text="{x:Bind ViewModel.TranslateValidation.CountWarning, Mode=OneWay}"/>
                     </StackPanel>
 
-                    <Button  Grid.Column="1" HorizontalAlignment="Right"  Padding="10 5" Click="TrSubPanelClose_Click">
-                        <FontIcon x:Name="TrSubPanelCloseIcon" FontSize="10" Glyph="&#xE971;" />
+                    <Button  Grid.Column="1" HorizontalAlignment="Right"  Padding="10 5" Command="{x:Bind ViewModel.SubPanelTrCloseCmd}">
+                        <FontIcon x:Name="TrSubPanelCloseIcon" FontSize="10" Glyph="{x:Bind ViewModel.TranslateSubPanel.Glyph, Mode=OneWay}" />
                     </Button>
 
                 </Grid>
 
                 <ScrollViewer Height="118">
-                    <ListView ItemsSource="{x:Bind TranslateValidation.Errors, Mode=TwoWay}" SelectionMode="None" IsItemClickEnabled="True" ItemClick="ViewTrErrorItem_Click" >
+                    <ListView ItemsSource="{x:Bind ViewModel.TranslateValidation.Errors, Mode=TwoWay}" SelectionMode="None" IsItemClickEnabled="True" helperProperties:ItemClickCommand.Command="{x:Bind ViewModel.ViewErrorTrCmd}" >
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <Grid ColumnSpacing="5">
