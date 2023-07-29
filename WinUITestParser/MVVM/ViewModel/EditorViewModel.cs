@@ -10,8 +10,7 @@ using WinUITestParser.Services;
 using System;
 using Microsoft.UI.Text;
 using System.Linq;
-using CommunityToolkit.WinUI.Helpers;
-using Microsoft.VisualBasic;
+using CommunityToolkit.WinUI.Helpers; 
 
 namespace WinUITestParser.MVVM.ViewModel
 {
