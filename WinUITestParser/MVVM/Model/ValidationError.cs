@@ -9,8 +9,11 @@ namespace WinUITestParser.MVVM.Model
     {
         public ObservableCollection<ValidationError> Errors { get; set; }
 
-        public int CountError { get; set; }
-        public int CountWarning { get; set; }
+        private int _countError;
+        public int CountError { get => _countError; set => SetProperty(ref _countError, value); }
+
+        private int _countWarning;
+        public int CountWarning { get => _countWarning; set => SetProperty(ref _countWarning, value); }
 
         public ValidationErrorModel()
         {

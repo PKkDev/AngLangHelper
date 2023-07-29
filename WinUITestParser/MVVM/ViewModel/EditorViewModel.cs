@@ -486,7 +486,7 @@ namespace WinUITestParser.MVVM.ViewModel
                 var xml = await FileIO.ReadTextAsync(TranslateFile);
 
                 App.MainWindow.DispatcherQueue.TryEnqueue(() =>
-                {
+                { 
                     _editor2.TextDocument.SetText(TextSetOptions.None, xml);
                     TranslateLinePosDict = UpdateEditorLineDict(_editor2, xml);
                 });

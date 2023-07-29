@@ -145,8 +145,6 @@ namespace WinUITestParser.Services
                 //xmlDoc.Save(sw);
                 //string formattedXml = sw.ToString();
 
-
-
                 XDocument doc = XDocument.Parse(xml);
                 //string xmlParsed2 = doc.ToString(SaveOptions.None);
 
